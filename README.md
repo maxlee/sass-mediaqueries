@@ -2,32 +2,110 @@
 
 It's a collection of useful **Media Queries** mixins for **Sass** (including iOS devices, TVs and more). Fully customizable and very easy to use.
 
-#### Online: <http://paranoida.github.com/sass-mediaqueries>
-#### Demo: <http://paranoida.github.com/sass-mediaqueries/demo.html>
+#### Online: <http://rafalbromirski.github.com/sass-mediaqueries>
+#### Demo: <http://rafalbromirski.github.com/sass-mediaqueries/demo.html>
 
 ### How to install:
 
-1. Using **bower**:
+Using **bower**:
 
-	```
-	bower install sass-mediaqueries
-	```
+```
+bower install sass-mediaqueries
+```
 
-	Or manually using **curl**:
+Using **npm**:
 
-	```
-	curl -O https://raw.githubusercontent.com/paranoida/sass-mediaqueries/master/_media-queries.scss
-	```
+```
+npm install sass-mediaqueries
+```
 
-2. Then, at the top of your sass/scss file (ie. `application.scss`) add:
+Using **curl**:
 
-	```scss
-	@import "media-queries";
-	```
+```
+curl -O https://raw.githubusercontent.com/rafalbromirski/sass-mediaqueries/master/_media-queries.scss
+```
+
+Then, at the top of your sass/scss file (ie. `application.scss`) add:
+
+```scss
+@import "media-queries";
+```
 
 ## Doc:
 
-#### Mixins:
+#### Generator (v1.6.0):
+
+```
+mq($args...)
+```
+
+Generator allows you to create custom media-queries mixins by passing [**keywords arguments**](http://sass-lang.com/documentation/file.SASS_REFERENCE.html#keyword_arguments) based on w3c [**media features**](http://www.w3.org/TR/css3-mediaqueries/#media1) specification (make sure you always provide key and value).
+
+It's also a syntactic sugar for the standard media queries [syntax](http://www.w3.org/TR/css3-mediaqueries/#media0) (CSS).
+
+**Examples**:
+
+```scss
+@include mq($max-width: 1000px) {
+  ...
+}
+
+// will generate
+
+@media only screen and (max-width: 1000px) {
+  ...
+}
+```
+
+Creating new mixins (like `max-screen`) is even easier:
+
+```scss
+@mixin max-screen($max)
+  @include mq($max-width: $max) {
+    @content;
+  }
+}
+
+// usage
+
+@include max-screen(1000px) {
+  ...
+}
+
+// will generate
+
+@media only screen and (max-width: 1000px) {
+  ...
+}
+```
+
+Or if you want to change `$media-type` and other properies:
+
+```scss
+@mixin custom-device($min, $max)
+  @include mq($media-type: 'all', $min-width: $min, $max-width: $max) {
+    @content;
+  }
+}
+
+// usage
+
+@include custom-device(500px, 1000px) {
+  ...
+}
+
+// will generate
+
+@media all and (min-width: 500px) and (max-width: 1000px) {
+  ...
+}
+```
+
+How cool is that?
+
+---
+
+#### Other Mixins:
 
 ```
 @  screen(min-width, max-width, orientation)
@@ -43,7 +121,6 @@ It's a collection of useful **Media Queries** mixins for **Sass** (including iOS
 @  landscape
 @  portrait
 --
-@  iphone3(orientation)
 @  iphone4(orientation)
 @  iphone5(orientation)
 @  iphone6(orientation)
@@ -213,10 +290,6 @@ It will be compiled to:
 $orientation: all | portrait | landscape
 ```
 
-#### - iphone3($orientation: all)
-
-It targets only **iPhone 3** + orientation
-
 #### - iphone4($orientation: all)
 
 It targets only **iPhone 4** + orientation
@@ -249,7 +322,6 @@ It targets only **iPads with retina** display + orientation
 
 @include iphone5 { ... }              // only iPhone 5
 @include iphone4 { ... }              // only iPhone 4/4S
-@include iphone3 { ... }              // only iPhone 2/3G/3GS
 ```
 
 ###### # Example:
@@ -291,7 +363,7 @@ It targets TVs with particular standard like `1080` or `4K`
 
 ### Credits:
 
-Feel free to check my <a href="http://rafalbromirski.com">website</a> or follow me on <a href="https://twitter.com/paranoida">twitter</a>.
+Feel free to check my <a href="http://rafalbromirski.com">website</a> or follow me on <a href="https://twitter.com/rafalbromirski">twitter</a>.
 
 ---
 
